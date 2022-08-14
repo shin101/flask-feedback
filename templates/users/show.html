@@ -1,0 +1,46 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}Show{% endblock %}
+
+{% block content %}
+
+<!-- Show information about the given user-->
+<b> Username : {{user.username}}</b> <form>
+    <button type="submit" formaction="/users/{{user.username}}/feedback/add" formmethod="POST">Add feedback</button></form>
+
+<!-- Show all of the feedback that the user has given. -->
+<h2>Feedback</h2>
+<ul>
+    {% for feedback in all_feedback %}
+    <li><u><h3>{{feedback.title}}</u> 
+
+        {% if session['username'] == feedback.user.username %}
+
+        <form style="display:inline" action="/feedback/{{feedback.id}}/delete" method="POST">
+            <button>Delete</button>
+        </form>
+
+        <form style="display:inline" action="/feedback/{{feedback.id}}/update">
+        <button>Edit</button>
+    </form>
+        {% endif %}
+
+    </h3>
+        <b>Author:</b> {{feedback.user.username}}
+        <p>{{feedback.content}}
+    
+        </p></li>
+    {% endfor %}
+</ul>
+
+<!-- 
+For each piece of feedback, display with a link to a form to edit the feedback and a button to delete the feedback.
+
+Have a link that sends you to a form to add more feedback and a button to delete the user Make sure that only the user who is logged in can successfully view this page.   -->
+
+
+
+
+{% endblock %}
